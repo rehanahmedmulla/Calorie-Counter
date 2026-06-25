@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Calorie Goal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>Calorie Counter</h2>
+</nav>
+
+<div class="dashboard">
+
+    <h1>Daily Calorie Goal Calculator</h1>
+
+    <form method="POST">
+
+        <input type="number"
+               name="age"
+               placeholder="Age"
+               required>
+
+        <br><br>
+
+        <input type="number"
+               name="weight"
+               placeholder="Weight (kg)"
+               required>
+
+        <br><br>
+
+        <input type="number"
+               name="height"
+               placeholder="Height (cm)"
+               required>
+
+        <br><br>
+
+        <select name="gender">
+
+            <option>Male</option>
+            <option>Female</option>
+
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Calculate
+        </button>
+
+    </form>
+
+    {% if result %}
+
+    <div class="card">
+
+        <h2>Results</h2>
+
+        <p>
+            Maintenance Calories:
+            {{ result.maintenance }} kcal
+        </p>
+
+        <p>
+            Fat Loss Calories:
+            {{ result.fat_loss }} kcal
+        </p>
+
+        <p>
+            Muscle Gain Calories:
+            {{ result.muscle_gain }} kcal
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

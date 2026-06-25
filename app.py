@@ -72,6 +72,30 @@ def bmi():
         "bmi.html",
         result=result
     )
+@app.route("/goal", methods=["GET", "POST"])
+def goal():
+
+    result = None
+
+    if request.method == "POST":
+
+        age = int(request.form["age"])
+        weight = float(request.form["weight"])
+        height = float(request.form["height"])
+        gender = request.form["gender"]
+
+        if gender == "Male":
+            maintenance = 10 * weight + 6.25 * height - 5 * age + 5
+        else:
+            maintenance = 10 * weight + 6.25 * height - 5 * age - 161
+
+        result = {
+            "maintenance": round(maintenance),
+            "fat_loss": round(maintenance - 500),
+            "muscle_gain": round(maintenance + 300)
+        }
+
+    return render_template("goal.html", result=result)
 
 if __name__ == "__main__":
     app.run(debug=True)
