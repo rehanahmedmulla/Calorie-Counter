@@ -1,0 +1,85 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+}
+
+nav{
+    background:#2c3e50;
+    color:white;
+    padding:20px;
+}
+
+.hero{
+    text-align:center;
+    margin-top:150px;
+}
+
+.hero h1{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:20px;
+    margin-bottom:20px;
+}
+
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+.login-container{
+    width:400px;
+    margin:100px auto;
+    padding:30px;
+    box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+    border-radius:10px;
+}
+
+.login-container h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.login-container input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+}
+
+.login-container button{
+    width:100%;
+    background:#3498db;
+    color:white;
+}
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+}
+.dashboard{
+    text-align:center;
+    margin-top:80px;
+}
+
+.card{
+    width:300px;
+    margin:30px auto;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+}
