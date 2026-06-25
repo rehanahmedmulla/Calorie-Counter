@@ -12,12 +12,50 @@
 
 <div class="dashboard">
 
-    <h1>Welcome Rehan 👋</h1>
+    <h1>Calories Calculator</h1>
+
+    <form method="POST">
+
+        <select name="food">
+
+            <option>Rice</option>
+            <option>Egg</option>
+            <option>Banana</option>
+            <option>Apple</option>
+            <option>Chicken</option>
+
+        </select>
+
+        <br><br>
+
+        <input type="number"
+               name="quantity"
+               placeholder="Quantity"
+               required>
+
+        <br><br>
+
+        <button type="submit">
+            Calculate
+        </button>
+
+    </form>
+
+    {% if calories %}
 
     <div class="card">
-        <h2>Today's Calories</h2>
-        <h3>0 kcal</h3>
+
+       <h2>Calculation Result</h2>
+
+<p><strong>Food:</strong> {{ selected_food }}</p>
+
+<p><strong>Quantity:</strong> {{ quantity }}</p>
+
+<h1>{{ calories }} kcal</h1>
+
     </div>
+
+    {% endif %}
 
 </div>
 

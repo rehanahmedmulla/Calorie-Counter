@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -14,9 +14,32 @@ def login():
 def register():
     return render_template("register.html")
 
-@app.route("/dashboard")
+@app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    return render_template("dashboard.html")
+
+    calories = None
+
+    food_data = {
+        "Rice": 130,
+        "Egg": 70,
+        "Banana": 105,
+        "Apple": 95,
+        "Chicken": 239
+    }
+
+    if request.method == "POST":
+
+        food = request.form["food"]
+        quantity = int(request.form["quantity"])
+
+        calories = food_data[food] * quantity
+
+    return render_template(
+    "dashboard.html",
+    calories=calories,
+    selected_food=food if request.method == "POST" else None,
+    quantity=quantity if request.method == "POST" else None
+)
 
 if __name__ == "__main__":
     app.run(debug=True)
