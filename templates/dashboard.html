@@ -56,6 +56,24 @@
     </div>
 
     {% endif %}
+    <h2>Today's Food History</h2>
+    <table border="1" cellpadding="10" style="margin:auto;">
+        <tr>
+            <th>FOOD</th>
+
+            <th>OUANTITY</th>
+
+            <th>CALORIES</th>
+
+        </tr>
+        {%for item in history%}
+        <tr>
+            <td>{{item[0]}}</td>
+            <td>{{item[1]}}</td>
+            <td>{{item[2]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
 </div>
 
