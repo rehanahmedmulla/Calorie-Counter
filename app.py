@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import sqlite3
+from datetime import date
 
 app = Flask(__name__)
 
@@ -38,9 +39,11 @@ def dashboard():
         conn = sqlite3.connect("calories.db")
         cursor = conn.cursor()
 
+        today = date.today()
+
         cursor.execute(
-            "INSERT INTO food_history (food, quantity, calories) VALUES (?, ?, ?)",
-            (food, quantity, calories)
+            "INSERT INTO food_history (food, quantity, calories, date) VALUES (?, ?, ?, ?)",
+            (food, quantity, calories, str(today))
         )
 
         conn.commit()
@@ -55,15 +58,30 @@ def dashboard():
     """)
 
     history = cursor.fetchall()
+    total_calories=0
+    for item in history:
+        total_calories += item[2]
 
     conn.close()
+    goal = 2500
+
+    consumed = total_calories
+
+    remaining = goal - consumed
+
+    progress = round((consumed / goal) * 100)
 
     return render_template(
         "dashboard.html",
         calories=calories,
         selected_food=food if request.method == "POST" else None,
         quantity=quantity if request.method == "POST" else None,
-        history=history
+        history=history,
+        total_calories=total_calories,
+        goal=goal,
+        consumed=consumed,
+        remaining=remaining,
+        progress=progress
     )
 @app.route("/bmi", methods=["GET", "POST"])
 def bmi():

@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS food_history (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     food TEXT,
     quantity INTEGER,
-    calories INTEGER
+    calories INTEGER,
+    date TEXT
 )
 """)
 

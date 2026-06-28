@@ -11,6 +11,19 @@
 </nav>
 
 <div class="dashboard">
+    <div class="hero-card">
+
+    <h2>Today's Progress</h2>
+
+    <h3>Goal : {{ goal }} kcal</h3>
+
+    <h3>Consumed : {{ consumed }} kcal</h3>
+
+    <h3>Remaining : {{ remaining }} kcal</h3>
+
+    <h3>Progress : {{ progress }}%</h3>
+
+</div>
 
     <h1>Calories Calculator</h1>
 
@@ -74,6 +87,8 @@
         </tr>
         {% endfor %}
     </table>
+    <h2>Total Calories Today</h2>
+    <h1>{{total_calories}}kcal</h1>
 
 </div>
 
