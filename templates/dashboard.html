@@ -85,6 +85,37 @@
             <td>{{item[1]}}</td>
             <td>{{item[2]}}</td>
         </tr>
+        <h2>Today's Food History</h2>
+
+<table border="1" cellpadding="10" style="margin:auto;">
+
+    <tr>
+        <th>FOOD</th>
+        <th>QUANTITY</th>
+        <th>CALORIES</th>
+        <th>ACTION</th>
+    </tr>
+
+    {% for item in history %}
+
+    <tr>
+        <td>{{ item[1] }}</td>
+        <td>{{ item[2] }}</td>
+        <td>{{ item[3] }}</td>
+
+        <td>
+            <a href="/delete/{{ item[0] }}">
+                🗑 Delete
+            </a>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<h2>Total Calories Today</h2>
+<h1>{{ total_calories }} kcal</h1>
         {% endfor %}
     </table>
     <h2>Total Calories Today</h2>

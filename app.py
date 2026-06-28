@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,redirect
 import sqlite3
 from datetime import date
 
@@ -42,7 +42,7 @@ def dashboard():
         today = date.today()
 
         cursor.execute(
-            "INSERT INTO food_history (food, quantity, calories, date) VALUES (?, ?, ?, ?)",
+            "INSERT INTO food_history (food, quantity, calories,date) VALUES (?, ?, ?, ?)",
             (food, quantity, calories, str(today))
         )
 
@@ -52,7 +52,7 @@ def dashboard():
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT food, quantity, calories
+        SELECT id,food, quantity, calories
         FROM food_history
         ORDER BY id DESC
     """)
@@ -60,7 +60,7 @@ def dashboard():
     history = cursor.fetchall()
     total_calories=0
     for item in history:
-        total_calories += item[2]
+        total_calories += item[3]
 
     conn.close()
     goal = 2500
@@ -83,6 +83,23 @@ def dashboard():
         remaining=remaining,
         progress=progress
     )
+
+@app.route("/delete/<int:id>")
+def delete(id):
+
+    conn = sqlite3.connect("calories.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM food_history WHERE id=?",
+        (id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/dashboard")
+
 @app.route("/bmi", methods=["GET", "POST"])
 def bmi():
 
