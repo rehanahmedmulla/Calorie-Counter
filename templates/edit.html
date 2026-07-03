@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Food</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>Edit Food Entry</h1>
+
+    <form method="POST">
+
+        <label>Food</label>
+
+        <br><br>
+
+        <input
+            type="text"
+            value="{{ food[1] }}"
+            readonly>
+
+        <br><br>
+
+        <label>Quantity</label>
+
+        <br><br>
+
+        <input
+            type="number"
+            name="quantity"
+            value="{{ food[2] }}"
+            required>
+
+        <br><br>
+
+        <button type="submit">
+            Save Changes
+        </button>
+
+    </form>
+
+</body>
+
+</html>

@@ -47,6 +47,20 @@ foods = [
     ("Roti", "Grains", "1 Roti", 40, 120, 3.0, 22.0, 2.0, 3.0)
 
 ]
+cursor.executemany("""
+ INSERT INTO foods(
+    food_name,
+    food_category,
+    serving_type,
+    serving_weight,
+    calories,
+    protein,
+    carbs,
+    fat,
+    fiber
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+""", foods)
 
 conn.commit()
 conn.close()
