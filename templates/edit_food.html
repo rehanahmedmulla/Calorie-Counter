@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Food - RYNX</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>Calorie Counter 🍳</h2>
+    <div>
+        <a href="/manage_foods">🔙 Back to Manage Foods</a>
+    </div>
+</nav>
+
+<div class="dashboard">
+    <div class="calculator-card">
+        <h1>Edit Food ✏️</h1>
+        <form method="POST">
+            <input type="text" name="food_name" value="{{ food[1] }}" required>
+            <input type="number" name="calories" value="{{ food[2] }}" required>
+            <input type="number" step="0.1" name="protein" value="{{ food[3] }}" required>
+            <input type="number" step="0.1" name="carbs" value="{{ food[4] }}" required>
+            <input type="number" step="0.1" name="fat" value="{{ food[5] }}" required>
+            <input type="number" step="0.1" name="fiber" value="{{ food[6] }}" required>
+            
+            <button type="submit">Update Food ✅</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

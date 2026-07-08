@@ -1,126 +1,265 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<nav>
-    <h2>Calorie Counter🍳</h2>
+   <nav class="premium-nav">
+    <div class="logo">
+        <h2>RYNX <span>Calorie Counter 🍳</span></h2>
+    </div>
+    
+    <div class="nav-links">
+        <button id="theme-toggle" class="icon-btn" title="Toggle Theme">🌙</button>
+        
+        <a href="/dashboard" class="nav-item">🏠 Dashboard</a>
+        <a href="/manage_foods" class="nav-item">🍎 Manage Foods</a>
+        <a href="/login" class="nav-item logout">🚪 Logout</a>
+    </div>
 </nav>
 
-<div class="dashboard">
-    <div class="hero-card">
+<div class="app-container">
+    
+    <div class="hero-card slide-up-element" style="animation-delay: 0.1s;">
+        <h2>Today's Progress 🚀</h2>
+        <div class="progress-stats">
+            <div class="stat-item">
+                <span class="stat-label">🎯 Daily Goal</span>
+                <span class="stat-value goal-color">{{ goal }} kcal</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">🍽️ Consumed</span>
+                <span class="stat-value consumed-color">{{ consumed }} kcal</span>
+            </div>
+            {% if remaining < 0 %}
+            <div class="stat-item">
+                <span class="stat-label">⚠️ Exceeded By</span>
+                <span class="stat-value warning-color">{{ consumed - goal }} kcal</span>
+            </div>
+            {% else %}
+            <div class="stat-item">
+                <span class="stat-label">⚡Remaining</span>
+                <span class="stat-value remaining-color">{{ remaining }} kcal</span>
+            </div>
+            {% endif %}
+            <div class="stat-item">
+                <span class="stat-label">🔥Progress</span>
+                <span class="stat-value progress-color">{% if progress > 100 %}100{% else %}{{ progress }}{% endif %}%</span>
+            </div>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill" style="width: {% if progress > 100 %}100{% else %}{{ progress }}{% endif %}%;"></div>
+        </div>
+        <p class="motivational-text">Keep going! You're doing great! 💙</p>
+    </div>  
+    
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div style="background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; color: white; padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 20px;">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
-    <h2>Today's Progress 🚀</h2>
-
-    <h3>Goal : {{ goal }} kcal</h3>
-
-    <h3>Consumed : {{ consumed }} kcal</h3>
-
-    <h3>Remaining : {{ remaining }} kcal</h3>
-
-    <h3>Progress : {{ progress }}%</h3>
-
+    <div class="card floating-element glass-card">
+    <h2 style="text-align: center; margin-bottom: 15px; font-size: 32px;">🧠 AI Smart Logger</h2>
+    <p style="text-align: center; margin-bottom: 20px; font-size: 18px; color: var(--text-color);">
+        Type what you ate, and let AI do the math!
+    </p>
+    
+    <form action="/ai_logger" method="POST" class="ai-logger-form">
+        <input type="text" name="food_text" placeholder="e.g., 2 paneer parathe and 1 chai" required class="ai-input">
+        <button type="submit" class="ai-btn">Analyze & Save ✨</button>
+    </form>
 </div>
 
-    <h1>Calories Calculator</h1>
-
-    <form method="POST">
-
-       <select name="food">
-
-        {% for food in foods %}
-
-          <option value="{{ food[0] }}">
-              {{ food[0] }}
-          </option>
-
-        {% endfor %}
-
-      </select>
-
-        <br><br>
-
-        <input type="number"
-               name="quantity"
-               placeholder="Quantity"
-               required>
-
-        <br><br>
-
-        <button type="submit">
-            Calculate
-        </button>
-        {% if protein %}
-        <div class="nutrition-card">
-            <h2>Nutrition Facts</h2>
-            <p><strong>Protein:</strong>{{protein}} g</p>
-            <p><strong>Carbs:</strong>{{carbs}} g</p>
-            <p><storng>Fat:</storng>{{fat}} g</p>
-            <p><strong>Fiber:</strong>{{fiber}} g</p>
-        </div>
-        {% endif %}
-    </form>
-
-    {% if calories %}
-
-    <div class="card">
-
-       <h2>Calculation Result</h2>
-
-<p><strong>Food:</strong> {{ selected_food }}</p>
-
-<p><strong>Quantity:</strong> {{ quantity }}</p>
-
-<h1>{{ calories }} kcal</h1>
-
+    <div class="calculator-card slide-up-element" style="animation-delay: 0.2s;">
+        <h1>Calories Calculator</h1>
+        <form method="POST">
+            <select name="food" required>
+                <option value="" disabled selected>Select a food...</option>
+                {% for food in foods %}
+                <option value="{{ food[0] }}">{{ food[0] }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="quantity" placeholder="Quantity (e.g., 1)" min="1" required>
+            <button type="submit" class="calculate-btn">Calculate 🚀</button>
+        </form>
     </div>
 
+    <div class="calculator-card" style="margin-top: 20px;">
+    <h1>Ask AI Diet Coach 🤖</h1>
+    <form action="/ai_coach" method="POST">
+        <input type="text" name="query" placeholder="Ask about diet, protein, etc..." required>
+        <button type="submit" class="calculate-btn">Ask AI 🚀</button>
+    </form>
+    
+    {% if ai_response %}
+    <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 12px; color: white;">
+        <p><strong>AI Coach:</strong> {{ ai_response }}</p>
+    </div>
     {% endif %}
-    <h2>Today's Food History</h2>
-    <table border="1" cellpadding="10" style="margin:auto;">
-        <tr>
-            <th>FOOD</th>
+</div>
 
-            <th>QUANTITY</th>
+    {% if protein %}
+    <div class="nutrition-card slide-up-element" style="animation-delay: 0.3s;">
+        <h2>Nutrition Facts 🥗</h2>
+        <div style="position: relative; height:200px; width:200px; margin: 0 auto 30px auto;">
+            <canvas id="macroChart"></canvas>
+        </div>
+        <div style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
+            <div class="nutrition-item protein-item">
+                <div class="nutrition-left">💪 <span>Protein</span></div>
+                <div class="nutrition-right">{{ protein }} g</div>
+            </div>
+            <div class="nutrition-item carbs-item">
+                <div class="nutrition-left">🍚 <span>Carbs</span></div>
+                <div class="nutrition-right">{{ carbs }} g</div>
+            </div>
+            <div class="nutrition-item fat-item">
+                <div class="nutrition-left">🥑 <span>Fat</span></div>
+                <div class="nutrition-right">{{ fat }} g</div>
+            </div>
+            <div class="nutrition-item fiber-item">
+                <div class="nutrition-left">🌿 <span>Fiber</span></div>
+                <div class="nutrition-right">{{ fiber }} g</div>
+            </div>
+        </div>
+        <div class="nutrition-footer" style="width: 100%;">
+            ⭐ Eat healthy, stay healthy!
+        </div>
+    </div>
+    {% endif %}
 
-            <th>CALORIES</th>
+    <div class="history-container slide-up-element" style="animation-delay: 0.4s;">
+        <h2 style="text-align: center; padding-top: 20px;">Today's Food History 📜</h2>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Food</th>
+                    <th>Quantity</th>
+                    <th>Calories</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td><strong>{{ item[1] }}</strong></td>
+                    <td>{{ item[2] }}</td>
+                    <td>{{ item[3] }} kcal</td>
+                    <td>
+                        <a href="/edit/{{ item[0] }}" class="action-btn edit-btn">✏️ Edit</a>
+                        <a href="/delete/{{ item[0] }}" class="action-btn delete-btn" onclick="return confirm('Delete this item?')">🗑️ Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        </tr>
-       {% for item in history %}
-
-<tr>
-
-    <td>{{ item[1] }}</td>
-    <td>{{ item[2] }}</td>
-    <td>{{ item[3] }}</td>
-
-    <td>
-
-        <a href="/edit/{{ item[0] }}">
-            ✏️ Edit
-        </a>
-
-        <br><br>
-
-        <a href="/delete/{{ item[0] }}"
-           onclick="return confirm('Are you sure you want to delete this entry?')">
-            🗑 Delete
-        </a>
-
-    </td>
-
-</tr>
-
-{% endfor %}
-</table>
-
-<h2>Total Calories Today</h2>
-<h1>{{ total_calories }} kcal</h1>
+    <div class="total-calories-container slide-up-element" style="animation-delay: 0.5s;">
+        <h2>Total Calories Today 🔥</h2>
+        <h1 class="total-calories-text">
+            <span id="calorie-counter" data-target="{{ total_calories }}">0</span> 
+            <span class="kcal-text">kcal</span>
+        </h1>
+    </div>
 
 </div>
+{% if protein %}
+<script>
+    const ctx = document.getElementById('macroChart').getContext('2d');
+    const macroChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Protein', 'Carbs', 'Fat'],
+            datasets: [{
+                data: [{{ protein }}, {{ carbs }}, {{ fat }}],
+                backgroundColor: ['#f59e0b', '#ef4444', '#10b981'], 
+                borderWidth: 4, // Colors ke beech mein gap ka size
+                borderColor: '#ffffff', // Colors ke beech mein white line
+                borderRadius: 10, // Segment ke ends ko round karta hai (Super premium look!)
+                hoverOffset: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '85%', // Ring ko aur patla aur sleek banata hai
+            plugins: {
+                legend: {
+                    display: false 
+                }
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+</script>
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const counter = document.getElementById("calorie-counter");
+        
+        if (counter) {
+            const target = +counter.getAttribute("data-target");
+            const duration = 1500; // Animation 1.5 seconds tak chalegi
+            const increment = target / (duration / 16); // 60 FPS ke hisaab se speed
+
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCounter); // Smooth browser animation
+                } else {
+                    counter.innerText = target; // Final number set kar do
+                }
+            };
+
+            if (target > 0) {
+                updateCounter();
+            } else {
+                counter.innerText = 0;
+            }
+        }
+    });
+</script>
+
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // 1. Check if user already chose dark mode in the past
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-theme');
+        themeToggle.innerText = '☀️'; // Change icon to Sun
+    }
+
+    // 2. Listen for button click
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-theme');
+        
+        // Agar dark theme on hai, toh 'dark' save karo aur Sun icon dikhao
+        if (body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            themeToggle.innerText = '☀️';
+        } 
+        // Warna 'light' save karo aur Moon icon dikhao
+        else {
+            localStorage.setItem('theme', 'light');
+            themeToggle.innerText = '🌙';
+        }
+    });
+</script>
 
 </body>
 </html>

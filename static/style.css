@@ -1,97 +1,894 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* =========================================
+   THE REAL DUAL-THEME GLASSMORPHISM 🌓
+========================================= */
+
+/* --- 1. LIGHT MODE VARIABLES (Premium Icy Gradient) --- */
+:root {
+    /* Halka sa frosty blue gradient jisse white glass ubhar kar aaye */
+    --bg-color: radial-gradient(circle at 10% 20%, #ebf4f8 0%, #cce0f4 100%); 
+    
+    /* Cards ko aur transparent (glassy) banaya */
+    --card-bg: rgba(255, 255, 255, 0.45) !important; 
+    --text-color: #1e293b;
+    --pill-bg: rgba(255, 255, 255, 0.6) !important;
+    
+    /* White borders ko aur chamkaya taaki sheeshe ke edges dikhein */
+    --border-color: rgba(255, 255, 255, 0.9) !important; 
+    --shadow-color: rgba(15, 23, 42, 0.08) !important; 
 }
 
-body{
-    font-family:Arial, sans-serif;
+/* --- 2. DARK MODE VARIABLES (Gemini Screenshot Match) --- */
+body.dark-theme {
+    /* Naya deep radial gradient background */
+    --bg-color: radial-gradient(circle at 50% 30%, #1e1b4b, #020617 80%);
+    --card-bg: rgba(15, 23, 42, 0.4);
+    --text-color: #f8fafc;
+    --pill-bg: rgba(30, 41, 59, 0.6);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.4);
 }
 
-nav{
-    background:#2c3e50;
-    color:white;
-    padding:20px;
+/* --- 3. APPLYING THE THEME TO THE APP --- */
+body {
+    background: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    transition: background 0.6s ease, color 0.6s ease;
+    min-height: 100vh;
 }
 
-.hero{
-    text-align:center;
-    margin-top:150px;
+/* Navbar aur saare Cards ko Glass Banana */
+.premium-nav,
+.hero-card,
+.calculator-card,
+.nutrition-card,
+.history-container,
+.total-calories-container {
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(25px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(150%) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 15px 40px var(--shadow-color) !important;
+    transition: all 0.5s ease;
 }
 
-.hero h1{
-    font-size:50px;
-    margin-bottom:20px;
+/* Nutrition Pills (Fix for invisible text) */
+.nutrition-item {
+    background: var(--pill-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
 }
 
-.hero p{
-    font-size:20px;
-    margin-bottom:20px;
+/* Force Text Colors to strictly follow the Theme */
+.hero-card h1, .hero-card h2, .hero-card p,
+.calculator-card h1, .calculator-card p,
+.nutrition-card h2, .nutrition-card p,
+.nutrition-item div, .nutrition-item span, .nutrition-item strong,
+.premium-nav .logo span, .nav-item, th, td {
+    color: var(--text-color) !important;
+    transition: color 0.6s ease;
+}
+/* Ab body aur cards ko in variables ka use karne ke liye update karein */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth fade effect */
 }
 
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
-.login-container{
-    width:400px;
-    margin:100px auto;
-    padding:30px;
-    box-shadow:0px 0px 10px rgba(0,0,0,0.2);
-    border-radius:10px;
+.hero-card, .calculator-card, .nutrition-card {
+    background: var(--card-bg);
 }
 
-.login-container h1{
-    text-align:center;
-    margin-bottom:20px;
+.nutrition-item {
+    background-color: var(--pill-bg);
 }
 
-.login-container input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
+select, input {
+    background-color: var(--pill-bg);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-color);
 }
 
-.login-container button{
-    width:100%;
-    background:#3498db;
-    color:white;
-}
-nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:20px;
-}
-.dashboard{
-    text-align:center;
-    margin-top:80px;
+body {
+    background-color: #f4f6fb; 
+    color: #1e293b;
+    -webkit-font-smoothing: antialiased;
 }
 
-.card{
-    width:300px;
-    margin:30px auto;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+/* --- Navigation --- */
+nav {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6); 
+    color: white;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.hero-card{
-    width:60%;
-    margin:auto;
-    margin-top:20px;
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
-    text-align:center;
+nav h2 {
+    font-size: 24px;
+}
 
+/* --- Dashboard Layout (This centers your cards!) --- */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Forces everything to the middle */
+    justify-content: center;
+    gap: 35px; 
+    padding: 40px 20px;
+    width: 100%;
+}
+
+/* --- Premium Card Styles --- */
+.hero-card, .calculator-card, .nutrition-card {
+    background: white;
+    border-radius: 24px; 
+    padding: 35px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover, .calculator-card:hover, .nutrition-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(15, 23, 42, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #0f172a;
+    margin-bottom: 25px;
+}
+
+/* --- Progress Stats Layout --- */
+.progress-stats {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #64748b; 
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.goal-color { color: #8b5cf6; }       
+.consumed-color { color: #f59e0b; }   
+.remaining-color { color: #10b981; }  
+.progress-color { color: #3b82f6; }   
+
+/* --- Calculator Form Elements --- */
+select, input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    font-size: 16px;
+    margin-bottom: 20px;
+    background-color: #f8fafc;
+    outline: none;
+}
+
+select:focus, input:focus {
+    border-color: #8b5cf6; 
+    background-color: white;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25);
+}
+
+/* --- Premium Card Styles (Updated for Chart) --- */
+.nutrition-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Chart aur text ko center karega */
+    background: white;
+    border-radius: 24px; 
+    padding: 35px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Nutrition Facts (Pill Design - Fixed Width) --- */
+.nutrition-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    margin-bottom: 15px; /* Boxes ke beech mein gap */
+    background-color: #f8fafc; 
+    border-radius: 16px; 
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%; /* YEH LINE SABSE IMPORTANT HAI: Isse boxes pichkenge nahi */
+    border-left: 5px solid #8b5cf6; 
+}
+.protein-item { border-left-color: #f59e0b; } 
+.carbs-item { border-left-color: #ef4444; } 
+.fat-item { border-left-color: #10b981; } 
+.fiber-item { border-left-color: #84cc16; } 
+
+.nutrition-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nutrition-right {
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.nutrition-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f3e8ff;
+    color: #6b21a8;
+    border-radius: 12px;
+    font-weight: bold;
+}
+/* --- Dynamic Progress Bar --- */
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background-color: #e2e8f0; 
+    border-radius: 20px;
+    margin: 20px 0 15px 0;
+    overflow: hidden; 
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    border-radius: 20px;
+    transition: width 0.8s ease-in-out; 
+}
+.goal-color { color: #8b5cf6; }       
+.consumed-color { color: #f59e0b; }   
+.remaining-color { color: #10b981; }  
+.progress-color { color: #3b82f6; }   
+/* Add this new warning color 👇 */
+.warning-color { color: #ef4444; } /* Premium Red for going over limits */
+
+/* --- Force Dark Mode on Cards, Inputs & Text --- */
+body.dark-theme {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Cards ka background dark karega */
+.dark-theme .hero-card,
+.dark-theme .calculator-card,
+.dark-theme .nutrition-card {
+    background-color: var(--card-bg) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important; /* Dark mode ke liye dark shadow */
+}
+
+/* Saare text ko white/light karega */
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme p,
+.dark-theme span,
+.dark-theme div,
+.dark-theme th,
+.dark-theme td {
+    color: var(--text-color) !important;
+}
+
+/* Inputs ka background aur border dark karega */
+.dark-theme input {
+    background-color: var(--pill-bg) !important;
+    color: var(--text-color) !important;
+    border: 1.5px solid var(--border-color) !important;
+}
+
+/* --- Fix for Invisible Text in Dark Mode (Table & Dropdown) --- */
+.dark-theme table {
+    background-color: var(--card-bg) !important; /* Table ko dark karega */
+    border-color: var(--border-color) !important;
+}
+
+.dark-theme select {
+    background-color: var(--pill-bg) !important; /* Dropdown ko dark karega */
+    color: var(--text-color) !important;
+    border: 1.5px solid var(--border-color) !important;
+}
+
+/* --- Fix for Nutrition Pills in Dark Mode --- */
+.dark-theme .nutrition-item {
+    background-color: var(--pill-bg) !important; /* Forces the premium dark pill color */
+}
+
+/* Agar uske andar ke text spans ko bhi force karna pade */
+.dark-theme .nutrition-item div,
+.dark-theme .nutrition-item span {
+    color: var(--text-color) !important;
+}
+
+/* --- Fix for Nutrition Footer in Dark Mode --- */
+.dark-theme .nutrition-footer {
+    background-color: rgba(139, 92, 246, 0.15) !important; /* Premium soft dark purple background */
+    color: #c4b5fd !important;                             /* Bright light purple text */
+}
+
+/* =========================================
+   PREMIUM FOOD HISTORY TABLE & CALORIES
+========================================= */
+
+.history-container {
+    width: 100%;
+    max-width: 750px;
+    margin: 25px auto;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+    overflow: hidden; /* Yeh table ke edges ko softly round karne ke liye zaruri hai */
+    border: 1px solid var(--border-color);
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* Table Headers */
+.history-table th {
+    background-color: var(--pill-bg);
+    color: var(--text-color);
+    padding: 18px 20px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+/* Table Rows */
+.history-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+/* Last row ki line hatane ke liye */
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Premium Hover Effect */
+.history-table tbody tr:hover {
+    background-color: rgba(139, 92, 246, 0.05); /* Soft purple highlight */
+    transition: 0.3s ease;
+}
+
+/* --- Modern Action Buttons (Edit & Delete) --- */
+.action-btn {
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Edit Button Design */
+.edit-btn {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3b82f6 !important;
+}
+.edit-btn:hover {
+    background-color: #3b82f6;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+/* Delete Button Design */
+.delete-btn {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444 !important;
+}
+.delete-btn:hover {
+    background-color: #ef4444;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+/* --- Total Calories Gradient Text --- */
+.total-calories-text {
+    font-size: 56px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #2563EB, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 10px;
+    text-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+}
+
+
+/* =========================================
+   PREMIUM TOTAL CALORIES ANIMATION
+========================================= */
+
+.total-calories-container {
+    margin: 50px auto 80px auto;
+    text-align: center;
+    padding: 40px;
+    background: var(--card-bg);
+    border-radius: 30px;
+    box-shadow: 0 15px 50px rgba(139, 92, 246, 0.1); /* Soft glowing shadow */
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease;
+}
+
+/* Hover karne par card thoda upar uthega */
+.total-calories-container:hover {
+    transform: translateY(-5px);
+}
+
+.total-calories-text {
+    font-size: 64px;
+    font-weight: 800;
+    /* 4 colors ka gradient banaya hai jo flow karega */
+    background: linear-gradient(270deg, #2563EB, #8b5cf6, #ec4899, #2563EB);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 15px;
+    animation: gradientGlow 6s ease infinite; /* 6 seconds ka continuous animation */
+}
+
+.kcal-text {
+    font-size: 32px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* --- Moving Gradient Animation Rules --- */
+@keyframes gradientGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* =========================================
+   ULTIMATE NEON GLASSMORPHISM NAVBAR
+========================================= */
+
+/* Ye animation colors ko flow karwayegi */
+@keyframes neonFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.premium-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: none; /* Purana border hataya */
+}
+
+.dark-theme .premium-nav {
+    background: rgba(15, 23, 42, 0.7);
+}
+
+/* --- THE MAGIC: Animated Neon Bottom Border --- */
+.premium-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Patli premium line */
+    background: linear-gradient(90deg, #ff007f, #7928ca, #00d4ff, #ff007f);
+    background-size: 300% 300%;
+    animation: neonFlow 4s ease infinite;
+    box-shadow: 0 2px 20px rgba(121, 40, 202, 0.6); /* Niche ki taraf glow */
+}
+
+/* --- Animated Logo --- */
+.premium-nav .logo h2 {
+    font-size: 28px;
+    font-weight: 900;
+    margin: 0;
+    background: linear-gradient(90deg, #ff007f, #7928ca, #00d4ff);
+    background-size: 300% 300%;
+    animation: neonFlow 4s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
+
+.premium-nav .logo span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    -webkit-text-fill-color: var(--text-color); 
+    margin-left: 8px;
+    opacity: 0.8;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* --- Nav Items with Neon Hover & Text Fix --- */
+.nav-item {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 14px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    
+    /* THE FIX 👇 */
+    white-space: nowrap; /* Text ko ek hi line mein force karega */
+    flex-shrink: 0;      /* Buttons ko pichakne (squish hone) se rokega */
+    overflow: visible;   /* Kate hue text ko wapas layega */
+}
+.nav-item:hover {
+    background: rgba(121, 40, 202, 0.15);
+    color: #00d4ff !important;
+    text-shadow: 0 0 12px rgba(0, 212, 255, 0.8); /* Asli neon light text effect */
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.15);
+}
+
+.nav-item.logout:hover {
+    background: rgba(255, 0, 127, 0.15);
+    color: #ff007f !important;
+    text-shadow: 0 0 12px rgba(255, 0, 127, 0.8);
+    box-shadow: 0 10px 20px rgba(255, 0, 127, 0.15);
+}
+
+/* Theme Toggle Button */
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 15px;
+}
+
+.icon-btn:hover {
+    transform: rotate(20deg) scale(1.2);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)); /* Sun/Moon par glow */
+}
+
+/* =========================================
+   ULTIMATE ANIMATED PROGRESS CARD
+========================================= */
+
+/* 1. Breathing Card Glow (Dark Mode Specific) */
+@keyframes cardBreathe {
+    0% { box-shadow: 0 10px 30px rgba(139, 92, 246, 0.05); }
+    50% { box-shadow: 0 15px 50px rgba(0, 212, 255, 0.2), 0 0 20px rgba(139, 92, 246, 0.2); }
+    100% { box-shadow: 0 10px 30px rgba(139, 92, 246, 0.05); }
+}
+.dark-theme .hero-card {
+    animation: cardBreathe 4s infinite alternate;
+    border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+/* 2. Floating & Flying Rocket Emoji */
+@keyframes flyRocket {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(20deg) scale(1.15); }
+}
+.rocket-icon {
+    display: inline-block;
+    animation: flyRocket 2s ease-in-out infinite;
+}
+
+/* 3. Interactive Stat Pop (Hover Effect) */
+.progress-stats > div {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 12px;
+    border-radius: 16px;
+    cursor: default;
+    border: 1px solid transparent;
+}
+.progress-stats > div:hover {
+    background: rgba(139, 92, 246, 0.1);
+    transform: translateY(-6px) scale(1.05);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.15);
+}
+
+/* 4. Sci-Fi Striped Moving Progress Bar */
+@keyframes moveStripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}
+.progress-fill {
+    background: linear-gradient(90deg, #ff007f, #7928ca, #00d4ff);
+    background-size: 300% 300%;
+    animation: neonFlow 4s ease infinite; /* Pichli animation ka use */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ye code progress bar ke upar chalne wali white stripes banayega */
+.progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 30px 30px;
+    animation: moveStripes 1s linear infinite; /* Stripes continuously chalengi */
+    z-index: 1;
+    border-radius: inherit;
+}
+
+/* =========================================
+   PREMIUM APP LAYOUT & PROFESSIONAL ANIMATIONS
+========================================= */
+
+/* 1. Vertical App Container (Replaces Bento Grid) */
+.app-container {
+    display: flex;
+    flex-direction: column; /* Forces vertical stacking */
+    align-items: center;    /* Centers cards horizontally */
+    gap: 30px;              /* Spacing between cards */
+    max-width: 800px;
+    margin: 40px auto;
+    width: 100%;
+}
+
+/* Ensure cards take full available width in container */
+.app-container .hero-card,
+.app-container .calculator-card {
+    width: 90%; 
+    max-width: none; /* Remove previous hardcoded widths if any */
+}
+
+/* 2. Professional Slide-Up Fade (Load Animation) */
+@keyframes slideUpFadeApp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.slide-up-element {
+    animation: slideUpFadeApp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; /* Starts hidden */
+}
+
+/* 3. Subtle Interactive Inputs (No exaggerated bouncing) */
+.calculator-card select, 
+.calculator-card input {
+    transition: all 0.3s ease !important;
+}
+.calculator-card select:focus, 
+.calculator-card input:focus {
+    border-color: #3b82f6 !important; /* Professional Blue */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important; /* Soft focus ring, like iOS */
+    outline: none;
+}
+
+/* 4. The Action Button (Solid, realistic click feel) */
+.calculate-btn {
+    transition: background-color 0.2s ease, transform 0.1s ease !important;
+}
+.calculate-btn:hover {
+    background-color: #2563eb !important; /* Slightly darker on hover */
+}
+.calculate-btn:active {
+    transform: scale(0.98); /* Subtle realistic press effect */
+}
+/* =========================================
+   BULLETPROOF APP LAYOUT (FORCES CENTERING)
+========================================= */
+.app-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    gap: 30px;              
+    max-width: 650px;       /* Perfect app-like width */
+    margin: 40px auto;
+    width: 100%;
+    padding: 0 20px;        /* Side padding taaki mobile par screen se na chipke */
+}
+
+/* Forces ALL cards inside to take exactly 100% width of the container */
+.app-container > div {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important; /* Overrides any rogue margins pushing cards to the side */
+}
+
+/* Professional Slide-Up Fade */
+@keyframes slideUpFadeApp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.slide-up-element {
+    animation: slideUpFadeApp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; 
+}
+
+/* =========================================
+   PREMIUM ROUNDED SHAPES (iOS / SaaS STYLE)
+========================================= */
+
+/* 1. Main Cards (Bade aur smooth curves) */
+.hero-card,
+.calculator-card,
+.nutrition-card,
+.history-container,
+.total-calories-container {
+    border-radius: 32px !important; /* Premium soft curves for outer boxes */
+}
+
+/* 2. Inputs & Dropdowns (Clean aur modern look) */
+.calculator-card select,
+.calculator-card input {
+    border-radius: 18px !important;
+}
+
+/* 3. Main Call-to-Action Button */
+.calculate-btn {
+    border-radius: 22px !important; /* Thoda zyada rounded button ke liye */
+}
+
+/* 4. Nutrition Pills & Action Buttons (Inner elements) */
+.nutrition-item {
+    border-radius: 20px !important;
+}
+
+.action-btn {
+    border-radius: 14px !important; /* Table ke chhote buttons ke liye */
+}
+
+/* =========================================
+   BUG FIXES: INVISIBLE CARD & ACTION BUTTONS
+========================================= */
+
+/* 1. Fix: Today's Progress Card Invisible in Dark Mode */
+/* Yeh code clash ko rokar naye professional animation ko force karega */
+.dark-theme .hero-card.slide-up-element {
+    animation: slideUpFadeApp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    opacity: 1 !important; /* Zabardasti card ko visible banayega */
+}
+
+/* 2. Fix: Edit & Delete Buttons Alignment */
+/* Action column ke items ko Flexbox se ek hi line mein lock karna */
+.history-table td:last-child {
+    display: flex !important;
+    gap: 10px !important; /* Dono buttons ke beech perfectly equal gap */
+    align-items: center !important;
+    white-space: nowrap !important; /* Browser ko line todne se rokega */
+    border-bottom: none !important;
+}
+
+/* Buttons ko thoda aur premium aur compact banana */
+.action-btn {
+    margin-right: 0 !important; /* Purana margin hataya */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 14px !important;
+    flex: 1; /* Dono buttons ko equal size dega */
+}
+
+/* --- AI Smart Logger Styles --- */
+.ai-logger-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.ai-input {
+    background: rgba(15, 23, 42, 0.4) !important; /* Ekdum Dark Sheesha */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-color) !important;
+    padding: 18px !important;
+    border-radius: 20px !important;
+    font-size: 16px !important;
+    outline: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px); /* Asli Glassmorphism */
+}
+
+/* Neon Glow on Focus */
+.ai-input:focus {
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4) !important;
+}
+
+.ai-btn {
+    background: linear-gradient(90deg, #7c3aed, #2563eb) !important;
+    color: white !important;
+    font-weight: bold !important;
+    padding: 18px !important;
+    border-radius: 20px !important;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    font-size: 18px !important;
+}
+
+.ai-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6) !important;
 }

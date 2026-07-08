@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Foods - RYNX</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>Calorie Counter 🍳</h2>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+    </div>
+</nav>
+
+<div class="dashboard">
+
+    <div class="calculator-card">
+        <h1>Add Custom Food 🍎</h1>
+        <form method="POST">
+            <input type="text" name="food_name" placeholder="Food Name (e.g., Samosa)" required>
+            <input type="number" name="calories" placeholder="Total Calories" required>
+            <input type="number" step="0.1" name="protein" placeholder="Protein (g)" required>
+            <input type="number" step="0.1" name="carbs" placeholder="Carbs (g)" required>
+            <input type="number" step="0.1" name="fat" placeholder="Fat (g)" required>
+            <input type="number" step="0.1" name="fiber" placeholder="Fiber (g)" required>
+            
+            <button type="submit">Add to Database ➕</button>
+        </form>
+    </div>
+    <h2>Current Food Database</h2>
+    <table border="1" cellpadding="10" style="margin:auto; background: white; border-radius: 12px; width: 100%; max-width: 700px;">
+        <tr>
+            <th>FOOD NAME</th>
+            <th>CALORIES</th>
+            <th>PROTEIN</th>
+            <th>ACTION</th>
+        </tr>
+        {% for food in all_foods %}
+        <tr>
+            <td>{{ food[1] }}</td> 
+            <td>{{ food[2] }} kcal</td>
+            <td>{{ food[3] }} g</td>
+            <td>
+                <a href="/edit_food/{{ food[0] }}" 
+                   style="color: #3b82f6; text-decoration: none; font-weight: bold; margin-right: 15px;">
+                   ✏️ Edit
+                </a>
+                <a href="/delete_food/{{ food[0] }}" 
+                   onclick="return confirm('Are you sure you want to delete {{ food[1] }}?')" 
+                   style="color: #ef4444; text-decoration: none; font-weight: bold;">
+                   🗑️ Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>
